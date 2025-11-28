@@ -10,4 +10,16 @@ impl Game2048 {
             score: 0,
         }
     }
+
+    pub fn get_empty_positions(&self) -> Vec<(usize, usize)> {
+        let mut empty_positions = Vec::new();
+        for i in 0..4 {
+            for j in 0..4 {
+                if self.board[i][j] == 0 {
+                    empty_positions.push((i, j));
+                }
+            }
+        }
+        empty_positions
+    }
 } 

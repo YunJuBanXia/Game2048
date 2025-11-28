@@ -1,6 +1,7 @@
 // 通过crossterm获取键盘输入
 use crossterm::event::{read, Event, KeyCode, KeyEvent};
 use crate::model::Game2048;
+use rand::Rng;
 
 impl Game2048 {
     pub fn reset(&mut self) {
@@ -146,4 +147,36 @@ impl Game2048 {
             _ => (),
         }
     }
-}  
+
+    pub fn add_randon_element(&mut self) {
+        let mut rng = rand::thread_rng();
+        let empty_positions = self.get_empty_positions();
+        let (row, column) = if !empty_positions.is_empty() {
+            let &(row, column) = empty_positions
+                .get(rng.gen_range(0..empty_positions.len()))
+                .unwrap();
+            (row, column)
+        } else {
+            (4, 4) // Default value if no empty positions
+        };
+        if row == 4 && column == 4 {
+            return;
+        }
+        let value = rng.gen_range(1..=2) * 2; // 2或4
+        self.board[row][column] = value;
+    }
+
+    pub fn run(&mut self) {
+        self.reset();
+        loop {
+            self.add_randon_element();
+            self.display();
+            if self.is_lose() {
+                println!("Game Over! Your score is: {}", self.score);
+                break;
+            }
+            let input = self.get_input();
+            todo!()
+        }
+    }
+}
