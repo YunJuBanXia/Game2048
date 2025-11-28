@@ -10,4 +10,4 @@ impl Game2048 {
             score: 0,
         }
     }
-}
+} 
