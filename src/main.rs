@@ -1,3 +1,5 @@
+use game2048::model::Game2048;
 fn main() {
-    println!("Hello, world!");
+    let game = Game2048::new();
+    game.display();
 }
