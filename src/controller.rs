@@ -55,19 +55,85 @@ impl Game2048 {
                     temp.remove(i + 1);
                 }
             }
+            for i in 0..4 {
+                self.board[i][column] = if i < temp.len() { temp[i] } else { 0 };
+            }
         }
     }
 
     pub fn move_down(&mut self) -> () {
-
+        for column in 0..4 {
+            let mut temp = Vec::new();
+            for row in (0..4).rev() {
+                if self.board[row][column] != 0 {
+                    temp.push(self.board[row][column]);
+                }
+            }
+            for i in 0..temp.len() - 1 {
+                if temp[i] == temp[i + 1] {
+                    temp[i] *= 2;
+                    self.score = if self.score + temp[i] > self.score {
+                        temp[i]
+                    } else {
+                        self.score
+                    };
+                    temp.remove(i + 1);
+                }
+            }
+            for i in 0..4 {
+                self.board[3 - i][column] = if i < temp.len() { temp[i] } else { 0 };
+            }
+        }
     }
 
     pub fn move_left(&mut self) -> () {
-
+        for row in 0..4 {
+            let mut temp = Vec::new();
+            for column in 0..4 {
+                if self.board[row][column] != 0 {
+                    temp.push(self.board[row][column]);
+                }
+            }
+            for i in 0..temp.len() - 1 {
+                if temp[i] == temp[i + 1] {
+                    temp[i] *= 2;
+                    self.score = if self.score + temp[i] > self.score {
+                        temp[i]
+                    } else {
+                        self.score
+                    };
+                    temp.remove(i + 1);
+                }
+            }
+            for i in 0..4 {
+                self.board[row][i] = if i < temp.len() { temp[i] } else { 0 };
+            }
+        }
     }
 
     pub fn move_right(&mut self) -> () {
-
+        for row in 0..4 {
+            let mut temp = Vec::new();
+            for column in (0..4).rev() {
+                if self.board[row][column] != 0 {
+                    temp.push(self.board[row][column]);
+                }
+            }
+            for i in 0..temp.len() - 1 {
+                if temp[i] == temp[i + 1] {
+                    temp[i] *= 2;
+                    self.score = if self.score + temp[i] > self.score {
+                        temp[i]
+                    } else {
+                        self.score
+                    };
+                    temp.remove(i + 1);
+                }
+            }
+            for i in 0..4 {
+                self.board[row][3 - i] = if i < temp.len() { temp[i] } else { 0 };
+            }
+        }
     }
 
     // 上下左右移动
